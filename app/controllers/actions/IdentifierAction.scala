@@ -42,7 +42,8 @@ class AuthenticatedIdentifierAction @Inject() (
 
   private val acceptedEnrolments = Set(
     "HMCE-VAT-AGNT",
-    "HMCE-VATDEC-ORG"
+    "HMCE-VATDEC-ORG",
+    "HMRC-NOVRN-AGNT"
   )
 
   private def usingSupportedAffinityAndEnrolments(affinityGroup: AffinityGroup, enrolments: Enrolments): Boolean = {
