@@ -24,6 +24,7 @@ import play.api.mvc.Results.*
 import play.api.mvc.*
 import uk.gov.hmrc.auth.core.*
 import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals
+import uk.gov.hmrc.auth.core.retrieve.~
 import uk.gov.hmrc.http.{HeaderCarrier, UnauthorizedException}
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
@@ -39,14 +40,28 @@ class AuthenticatedIdentifierAction @Inject() (
     extends IdentifierAction
     with AuthorisedFunctions {
 
-  override def invokeBlock[A](request: Request[A], block: IdentifierRequest[A] => Future[Result]): Future[Result] = {
+  private val acceptedEnrolments = Set(
+    "HMCE-VAT-AGNT",
+    "HMCE-VATDEC-ORG"
+  )
 
+  private def usingSupportedAffinityAndEnrolments(affinityGroup: AffinityGroup, enrolments: Enrolments): Boolean = {
+    val isSupportedAffinity = affinityGroup == AffinityGroup.Organisation || affinityGroup == AffinityGroup.Agent
+
+    isSupportedAffinity && enrolments.enrolments.exists(e => e.isActivated && acceptedEnrolments(e.key))
+  }
+
+  override def invokeBlock[A](request: Request[A], block: IdentifierRequest[A] => Future[Result]): Future[Result] = {
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
-    authorised().retrieve(Retrievals.internalId) {
-      _.map { internalId =>
-        block(IdentifierRequest(request, internalId))
-      }.getOrElse(throw new UnauthorizedException("Unable to retrieve internal Id"))
+    authorised().retrieve(Retrievals.affinityGroup and Retrievals.credentials and Retrievals.allEnrolments) {
+      case Some(affinityGroup) ~ Some(credentials) ~ userEnrolments =>
+        if (usingSupportedAffinityAndEnrolments(affinityGroup, userEnrolments)) {
+          block(IdentifierRequest(request, credentials.providerId))
+        } else {
+          Future.successful(Redirect(routes.UnauthorisedController.onPageLoad()))
+        }
+      case _ => throw new UnauthorizedException("Unable to retrieve credential id")
     } recover {
       case _: NoActiveSession =>
         Redirect(config.loginUrl, Map("continue" -> Seq(config.loginContinueUrl)))
@@ -62,7 +77,6 @@ class SessionIdentifierAction @Inject() (
     extends IdentifierAction {
 
   override def invokeBlock[A](request: Request[A], block: IdentifierRequest[A] => Future[Result]): Future[Result] = {
-
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
     hc.sessionId match {
