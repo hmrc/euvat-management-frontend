@@ -40,24 +40,21 @@ class AuthenticatedIdentifierAction @Inject() (
     extends IdentifierAction
     with AuthorisedFunctions {
 
-  private val acceptedEnrolments = Set(
-    "HMCE-VAT-AGNT",
-    "HMCE-VATDEC-ORG",
-    "HMRC-NOVRN-AGNT"
-  )
-
   private def usingSupportedAffinityAndEnrolments(affinityGroup: AffinityGroup, enrolments: Enrolments): Boolean = {
-    val isSupportedAffinity = affinityGroup == AffinityGroup.Organisation || affinityGroup == AffinityGroup.Agent
-
-    isSupportedAffinity && enrolments.enrolments.exists(e => e.isActivated && acceptedEnrolments(e.key))
+    val keys = affinityGroup match {
+      case AffinityGroup.Organisation | AffinityGroup.Individual => Set("HMRC-EU-REF-ORG")
+      case AffinityGroup.Agent => Set("HMCE-VAT-AGNT", "HMRC-NOVRN-AGNT")
+      case _ => Set.empty[String]
+    }
+    enrolments.enrolments.exists(e => e.isActivated && keys.contains(e.key))
   }
 
   override def invokeBlock[A](request: Request[A], block: IdentifierRequest[A] => Future[Result]): Future[Result] = {
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
     authorised().retrieve(Retrievals.affinityGroup and Retrievals.credentials and Retrievals.allEnrolments) {
-      case Some(affinityGroup) ~ Some(credentials) ~ userEnrolments =>
-        if (usingSupportedAffinityAndEnrolments(affinityGroup, userEnrolments)) {
+      case Some(affinityGroup) ~ Some(credentials) ~ enrolments =>
+        if (usingSupportedAffinityAndEnrolments(affinityGroup, enrolments)) {
           block(IdentifierRequest(request, credentials.providerId))
         } else {
           Future.successful(Redirect(routes.UnauthorisedController.onPageLoad()))

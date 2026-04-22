@@ -19,7 +19,6 @@ package controllers
 import base.SpecBase
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import views.html.IndexView
 
 class IndexControllerSpec extends SpecBase {
 
@@ -31,11 +30,8 @@ class IndexControllerSpec extends SpecBase {
 
       running(application) {
         val request = FakeRequest(GET, routes.IndexController.onPageLoad().url)
-
         val result = route(application, request).value
-
-        val view = application.injector.instanceOf[IndexView]
-
+        
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustBe controllers.routes.ManageEuvatClaimController.onPageLoad().url
       }
