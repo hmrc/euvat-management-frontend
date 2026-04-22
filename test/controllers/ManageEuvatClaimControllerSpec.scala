@@ -18,26 +18,26 @@ package controllers
 
 import base.SpecBase
 import play.api.test.FakeRequest
-import play.api.test.Helpers.*
-import views.html.IndexView
+import play.api.test.Helpers._
+import views.html.ManageEuvatClaimView
 
-class IndexControllerSpec extends SpecBase {
+class ManageEuvatClaimControllerSpec extends SpecBase {
 
-  "Index Controller" - {
+  "ManageEuvatClaim Controller" - {
 
-    "must redirect to eu vat claim landing page and the correct view for a GET" in {
+    "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = None).build()
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, routes.IndexController.onPageLoad().url)
+        val request = FakeRequest(GET, routes.ManageEuvatClaimController.onPageLoad().url)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[IndexView]
+        val view = application.injector.instanceOf[ManageEuvatClaimView]
 
-        status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustBe controllers.routes.ManageEuvatClaimController.onPageLoad().url
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view()(request, messages(application)).toString
       }
     }
   }
