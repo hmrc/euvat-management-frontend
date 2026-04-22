@@ -27,10 +27,6 @@ error.title.prefix = Error:
 error.prefix = Error
 error.summary.title = There is a problem
 
-index.title = euvat-mgmt-frontend
-index.heading = euvat-mgmt-frontend
-index.guidance = Welcome to your new frontend. Please see the README file for a guide to getting started.
-
 checkYourAnswers.title = Check your answers
 checkYourAnswers.heading = Check your answers
 
