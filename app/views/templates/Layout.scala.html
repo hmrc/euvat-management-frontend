@@ -22,7 +22,7 @@
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.hmrcstandardpage.*
 @import views.html.helper.CSPNonce
 @import views.html.components.ThreeQuartersMainContent
-@import views.html.components.FourFifthsMainContent
+@import views.html.components.FullMainContent
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.backlink.BackLink
 
 @this(
@@ -33,11 +33,11 @@
     hmrcStandardPage: HmrcStandardPage,
     twoThirdsMainContent: TwoThirdsMainContent,
     threeQuartersMainContent: ThreeQuartersMainContent,
-    fourFifthsMainContent: FourFifthsMainContent,
+    fullMainContent: FullMainContent,
     hmrcTrackingConsentSnippet: HmrcTrackingConsentSnippet
 )
 
-@(pageTitle: String, showBackLink: Boolean = true, timeout: Boolean = true, showSignOut: Boolean = true, showHmrcBanner: Boolean = false, useThreeQuartersGrid: Boolean = false, useFourFifthsGrid: Boolean = false, backLink: Option[String] = None)(contentBlock: Html)(implicit rh: RequestHeader, messages: Messages)
+@(pageTitle: String, showBackLink: Boolean = true, timeout: Boolean = true, showSignOut: Boolean = true, showHmrcBanner: Boolean = false, useThreeQuartersGrid: Boolean = false, useFullGrid: Boolean = false, backLink: Option[String] = None)(contentBlock: Html)(implicit rh: RequestHeader, messages: Messages)
 
 @head = {
     @if(timeout) {
@@ -69,8 +69,8 @@
     templateOverrides = TemplateOverrides(
         additionalHeadBlock = Some(head),
         mainContentLayout = Some(
-            if (useFourFifthsGrid)     fourFifthsMainContent(_)
-            else if (useThreeQuartersGrid)       threeQuartersMainContent(_)
+            if (useFullGrid)                fullMainContent(_)
+            else if (useThreeQuartersGrid)  threeQuartersMainContent(_)
             else                            twoThirdsMainContent(_)
         )
     ),
