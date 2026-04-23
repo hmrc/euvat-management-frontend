@@ -9,3 +9,40 @@
 .js-enabled .js-visible {
   display: inline-block !important;
 }
+
+.govuk-link--disabled {
+  pointer-events: none;
+  color: #6a6a6a;
+  text-decoration: none;
+}
+
+.text-turquoise {
+  color: #158187;
+}
+
+@media (min-width: 40.0625em) {
+  .govuk-summary-list{
+    &__key {
+      width: 35%;
+    }
+    &__actions {
+      width: auto;
+    }
+  }
+}
+
+.govuk-summary-list__row {
+  border-bottom: 1px solid #bfc1c3;
+}
+
+.inline-logo {
+  max-height: 60px;
+  vertical-align: middle;
+  margin: 0.5em 0;
+  width: auto;
+  height: auto;
+}
+
+.govuk-hint-black {
+  color: #0b0c0c;
+}
