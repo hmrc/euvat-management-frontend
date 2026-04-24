@@ -35,6 +35,6 @@ class ManageEuvatClaimController @Inject()(
 
   def onPageLoad: Action[AnyContent] = (identify) {
     implicit request =>
-      Ok(view(appConfig.filingFrontendTaskList))
+      Ok(view(appConfig.makeClaimUrl))
   }
 }

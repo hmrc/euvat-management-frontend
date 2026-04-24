@@ -39,7 +39,7 @@ class ManageEuvatClaimControllerSpec extends SpecBase {
         val view = application.injector.instanceOf[ManageEuvatClaimView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(config.filingFrontendTaskList)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(config.makeClaimUrl)(request, messages(application)).toString
       }
     }
   }
