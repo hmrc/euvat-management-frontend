@@ -16,7 +16,9 @@
 
 package controllers
 
-import controllers.actions._
+import config.FrontendAppConfig
+import controllers.actions.*
+
 import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -26,12 +28,13 @@ import views.html.ManageEuvatClaimView
 class ManageEuvatClaimController @Inject()(
                                        override val messagesApi: MessagesApi,
                                        identify: IdentifierAction,
+                                       appConfig: FrontendAppConfig,
                                        val controllerComponents: MessagesControllerComponents,
                                        view: ManageEuvatClaimView
                                      ) extends FrontendBaseController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = (identify) {
     implicit request =>
-      Ok(view())
+      Ok(view(appConfig.makeClaimUrl))
   }
 }

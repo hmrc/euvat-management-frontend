@@ -17,8 +17,9 @@
 package controllers
 
 import base.SpecBase
+import config.FrontendAppConfig
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import views.html.ManageEuvatClaimView
 
 class ManageEuvatClaimControllerSpec extends SpecBase {
@@ -33,11 +34,12 @@ class ManageEuvatClaimControllerSpec extends SpecBase {
         val request = FakeRequest(GET, routes.ManageEuvatClaimController.onPageLoad().url)
 
         val result = route(application, request).value
+        val config = application.injector.instanceOf[FrontendAppConfig]
 
         val view = application.injector.instanceOf[ManageEuvatClaimView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view()(request, messages(application)).toString
+        contentAsString(result) mustEqual view(config.makeClaimUrl)(request, messages(application)).toString
       }
     }
   }
