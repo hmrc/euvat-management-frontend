@@ -21,7 +21,7 @@
         govukSummaryList : GovukSummaryList
 )
 
-@()(implicit request: Request[_], messages: Messages)
+@(filingFrontendTaskList: String)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("manageEuvatClaim.title")), useFullGrid = true) {
 
@@ -34,7 +34,7 @@
       <div class="govuk-summary-card">
        <div class="govuk-summary-card__content">
         <h2 class="govuk-heading-m">
-         <a href="" class="govuk-link">@messages("manageEuvatClaim.grid1.heading")</a>
+         <a href="@filingFrontendTaskList" class="govuk-link">@messages("manageEuvatClaim.grid1.heading")</a>
         </h2>
         <p class="govuk-body">@messages("manageEuvatClaim.grid1.p")</p>
        </div>
