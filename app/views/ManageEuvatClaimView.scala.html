@@ -17,8 +17,8 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 
 @this(
-        layout: templates.Layout,
-        govukSummaryList : GovukSummaryList
+    layout: templates.Layout,
+    govukSummaryList : GovukSummaryList
 )
 
 @(makeClaimUrl: String)(implicit request: Request[_], messages: Messages)
@@ -27,7 +27,7 @@
 
     <h1 class="govuk-heading-l">@messages("manageEuvatClaim.heading")</h1>
 
-    <p class="govuk-body">@messages("manageEuvatClaim.p")</p>
+    <p class="govuk-body-l">@messages("manageEuvatClaim.p")</p>
 
     <div class ="govuk-grid-row">
      <div class="govuk-grid-column-one-half">

@@ -33,8 +33,7 @@
     hmrcStandardPage: HmrcStandardPage,
     twoThirdsMainContent: TwoThirdsMainContent,
     threeQuartersMainContent: ThreeQuartersMainContent,
-    fullMainContent: FullMainContent,
-    hmrcTrackingConsentSnippet: HmrcTrackingConsentSnippet
+    fullMainContent: FullMainContent
 )
 
 @(pageTitle: String, showBackLink: Boolean = true, timeout: Boolean = true, showSignOut: Boolean = true, showHmrcBanner: Boolean = false, useThreeQuartersGrid: Boolean = false, useFullGrid: Boolean = false, backLink: Option[String] = None)(contentBlock: Html)(implicit rh: RequestHeader, messages: Messages)
