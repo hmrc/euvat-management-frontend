@@ -18,16 +18,23 @@ package controllers
 
 import base.SpecBase
 import config.FrontendAppConfig
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.when
+import org.scalatestplus.mockito.MockitoSugar
+import org.scalatestplus.mockito.MockitoSugar.mock
+import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import repositories.SessionRepository
 import views.html.ManageEuvatClaimView
 
-class ManageEuvatClaimControllerSpec extends SpecBase {
+import scala.concurrent.Future
+
+class ManageEuvatClaimControllerSpec extends SpecBase with MockitoSugar {
 
   "ManageEuvatClaim Controller" - {
 
     "must return OK and the correct view for a GET" in {
-
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
@@ -42,5 +49,45 @@ class ManageEuvatClaimControllerSpec extends SpecBase {
         contentAsString(result) mustEqual view(config.makeClaimUrl)(request, messages(application)).toString
       }
     }
+
+    "must return OK and the correct view for a GET when session is set" in {
+      val mockSessionRepository = mock[SessionRepository]
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application = applicationBuilder(userAnswers = None)
+        .overrides(bind[SessionRepository].toInstance(mockSessionRepository))
+        .build()
+
+      running(application) {
+        val request = FakeRequest(GET, routes.ManageEuvatClaimController.onPageLoad().url)
+        val result = route(application, request).value
+        val config = application.injector.instanceOf[FrontendAppConfig]
+        val view = application.injector.instanceOf[ManageEuvatClaimView]
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(config.makeClaimUrl)(request, messages(application)).toString
+      }
+    }
+
+    "must still return OK even if sessionRepository.set returns false" in {
+      val mockSessionRepository = mock[SessionRepository]
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(false)
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        .overrides(bind[SessionRepository].toInstance(mockSessionRepository))
+        .build()
+
+      running(application) {
+        val request = FakeRequest(GET, routes.ManageEuvatClaimController.onPageLoad().url)
+
+        val result = route(application, request).value
+        val config = application.injector.instanceOf[FrontendAppConfig]
+        val view = application.injector.instanceOf[ManageEuvatClaimView]
+
+        status(result) mustEqual OK
+        contentAsString(result) mustEqual view(config.makeClaimUrl)(request, messages(application)).toString
+      }
+    }
+
   }
 }
