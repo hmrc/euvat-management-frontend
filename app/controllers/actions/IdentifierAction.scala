@@ -43,10 +43,13 @@ class AuthenticatedIdentifierAction @Inject() (
   private def usingSupportedAffinityAndEnrolments(affinityGroup: AffinityGroup, enrolments: Enrolments): Boolean = {
     val keys = affinityGroup match {
       case AffinityGroup.Organisation | AffinityGroup.Individual => Set("HMRC-EU-REF-ORG")
-      case AffinityGroup.Agent => Set("HMCE-VAT-AGNT", "HMRC-NOVRN-AGNT")
-      case _ => Set.empty[String]
+      case AffinityGroup.Agent                                   => Set("HMCE-VAT-AGNT", "HMRC-NOVRN-AGNT")
+      case _                                                     => Set.empty[String]
     }
-    enrolments.enrolments.exists(e => e.isActivated && keys.contains(e.key))
+
+    enrolments.enrolments
+      .exists(e => e.isActivated && keys.contains(e.key) && e.identifiers.exists(id => id.key.trim.nonEmpty && id.value.trim.nonEmpty))
+
   }
 
   override def invokeBlock[A](request: Request[A], block: IdentifierRequest[A] => Future[Result]): Future[Result] = {
