@@ -45,10 +45,10 @@ unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
 unauthorised.guidance = You do not have access to this service.
 
-manageEuvatClaim.title = Manage your EU VAT claim
-manageEuvatClaim.heading = Manage your EU VAT claim
-manageEuvatClaim.p = Use this service to claim back EU VAT on a purchase or import from an EU member state.
-manageEuvatClaim.grid1.heading = Make a new EU VAT claim
-manageEuvatClaim.grid1.p = Start a claim to get back VAT paid in an EU member state on purchases or imports.
+manageEuvatClaim.title = Claim an EU VAT refund
+manageEuvatClaim.heading = Claim an EU VAT refund
+manageEuvatClaim.p = Use this service to claim back VAT on purchases or imports from an EU member state.
+manageEuvatClaim.grid1.heading = Make a claim for an EU VAT refund
+manageEuvatClaim.grid1.p = Start a new claim for an EU VAT refund.
 manageEuvatClaim.grid2.heading = View or manage claims
 manageEuvatClaim.grid2.p = You have submitted 2 claims and have 1 claim in progress.
