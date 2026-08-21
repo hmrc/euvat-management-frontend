@@ -45,10 +45,10 @@ unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
 unauthorised.guidance = You do not have access to this service.
 
-manageEuvatClaim.title = Claim an EU VAT refund
-manageEuvatClaim.heading = Claim an EU VAT refund
-manageEuvatClaim.p = Use this service to claim back VAT on purchases or imports from an EU member state.
-manageEuvatClaim.grid1.heading = Make a claim for an EU VAT refund
-manageEuvatClaim.grid1.p = Start a new claim for an EU VAT refund.
-manageEuvatClaim.grid2.heading = View or manage claims
-manageEuvatClaim.grid2.p = You have submitted 2 claims and have 1 claim in progress.
+manageEuvatClaim.title = Hawlio ad-daliad TAW yr UE
+manageEuvatClaim.heading = Hawlio ad-daliad TAW yr UE
+manageEuvatClaim.p = Defnyddiwch y gwasanaeth hwn i hawlio TAW yn ôl ar bryniannau neu fewnforion o aelod-wladwriaeth yr UE.
+manageEuvatClaim.grid1.heading = Gwnewch hawliad am ad-daliad TAW yr UE
+manageEuvatClaim.grid1.p = Dechreuwch hawliad newydd am ad-daliad TAW yr UE.
+manageEuvatClaim.grid2.heading = Rheoli’ch hawliadau
+manageEuvatClaim.grid2.p = Bwrw golwg dros, golygu a dileu’ch hawliadau presennol.
