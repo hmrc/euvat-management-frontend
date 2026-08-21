@@ -1,6 +1,6 @@
-service.name = EU VAT
+service.name = Hawlio ad-daliad TAW yr UE
 
-site.back = Back
+service.name = Hawlio ad-daliad TAW yr UE
 site.remove = Remove
 site.change = Change
 site.no = No
@@ -23,9 +23,9 @@ timeout.message = For security reasons, you will be signed out of this service i
 timeout.keepAlive = Stay signed in
 timeout.signOut = Sign out
 
-error.title.prefix = Error:
-error.prefix = Error
-error.summary.title = There is a problem
+error.title.prefix = Gwall:
+error.prefix = Gwall
+error.summary.title = Mae problem
 
 checkYourAnswers.title = Check your answers
 checkYourAnswers.heading = Check your answers
